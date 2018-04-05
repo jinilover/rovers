@@ -2,7 +2,8 @@ module Arbitraries
      ( genUpperRight
      , genDirection
      , genPosition
-     , genCommand) where
+     , genCommand
+     , genList ) where
 
 import Test.QuickCheck
 import Types
@@ -28,3 +29,11 @@ genPosition (Coordinate x y) = do
 
 genCommand :: Gen Command
 genCommand = elements [L, R, M]
+
+instance Arbitrary Command where
+  arbitrary = genCommand
+
+genList :: Arbitrary a => Gen [a]
+genList = sized $ \n -> do
+  listSize <- choose (0, n)
+  mapM (const arbitrary) [1 .. listSize]
