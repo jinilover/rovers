@@ -6,7 +6,7 @@ module Types
     , ProcessStatus
     ) where
 
-data Command = L | R | M
+data Command = L | R | M deriving (Show, Eq)
 
 data Direction = E | S | W | N deriving (Show, Eq)
 

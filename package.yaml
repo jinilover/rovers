@@ -47,4 +47,4 @@ tests:
     dependencies:
     - rovers
     - hspec
-    - HUnit-Plus
+    - QuickCheck

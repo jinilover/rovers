@@ -2,14 +2,13 @@ module MoverSpec
     ( execCmdSpec ) where
 
 import Test.Hspec
-import Test.HUnitPlus.Base
 import Types
 import Mover
 import Control.Monad
 
 execCmdSpec :: Spec
 execCmdSpec =
-  describe "Mover" $ do
+  describe "Mover spec" $ do
     it "execute correctly commands of changing direction only" $
       let upperRight = Coordinate 5 5
           initPos = Position (Coordinate 1 3) E
