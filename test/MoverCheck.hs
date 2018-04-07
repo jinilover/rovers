@@ -1,4 +1,5 @@
-module MoverCheck where
+module MoverCheck
+     ( moverCheck ) where
 
 import Test.QuickCheck
 import Test.Hspec
