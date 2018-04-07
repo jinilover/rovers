@@ -1,9 +1,10 @@
 import Test.Hspec
 import MoverSpec
 import MoverCheck
+import ParserSpec
 
 main :: IO ()
 main = hspec $ foldl (>>) (return ()) specs
 
 specs :: [Spec]
-specs = [execCmdSpec, moverCheck]
+specs = [moverSpec, moverCheck, parserSpec]

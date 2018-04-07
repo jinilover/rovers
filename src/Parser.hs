@@ -26,10 +26,10 @@ parseUpperRight s = (toCoord . splitBySpace) s
         toCoord xs = Left [i|#{(show . length) xs} items in '#{s}', there should be 2 items|]
 
 parsePosition :: Coordinate -> String -> Either String Position
-parsePosition upperRight s = (toPosition . splitBySpace) s
+parsePosition upperRight@(Coordinate maxX maxY) s = (toPosition . splitBySpace) s
   where toPosition [x, y, d : ""] = do
           coord <- parseCoordinate x y
-          _ <- if withinPlateau coord upperRight then Right () else Left [i|(#{x}, #{y}) not within (0, 0) to #{show coord}|]
+          _ <- if withinPlateau coord upperRight then Right () else Left [i|(#{x}, #{y}) not within (0, 0) to (#{show maxX}, #{show maxY})|]
           dir <- parseDirection d
           return $ Position coord dir
         toPosition xs = Left [i|#{(show . length) xs} items in '#{s}', there should be 3 items|]
