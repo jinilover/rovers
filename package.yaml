@@ -51,3 +51,4 @@ tests:
     - rovers
     - hspec
     - QuickCheck
+    - HUnit

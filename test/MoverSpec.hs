@@ -55,9 +55,7 @@ check :: Coordinate -> Position -> [Command] -> [Position] -> Expectation
 check upperRight origPos cmds expectPoses = do
   expectOutput <- foldl checkStep (return origPos) (zip cmds expectPoses)
   execCmds upperRight origPos cmds `shouldBe` expectOutput
-  return ()
     where checkStep assertion (cmd, expectPos) = do
             currPos <- assertion
-            let newPos = execCmd upperRight currPos cmd
-            newPos `shouldBe` expectPos
-            return newPos
+            execCmd upperRight currPos cmd `shouldBe` expectPos
+            return expectPos

@@ -54,4 +54,4 @@ splitBySpace :: String -> [String]
 splitBySpace = splitOn " "
 
 parseInt :: String -> Either String Int
-parseInt s = first (<> " for " <> s) . readEither $ s
+parseInt s = first (const $ s <> " can't be parsed to an integer") . readEither $ s
