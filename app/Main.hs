@@ -9,7 +9,9 @@ main :: IO ()
 main = do
   [fileName] <- getArgs
   fileContent <- readFile fileName
-  case (process . lines) fileContent of
-    Left s -> print s
-    Right SetupPlateau -> undefined
-    Right status -> undefined
+  print . outputMsg . process . lines $ fileContent
+
+outputMsg :: Either String ProcessStatus -> String
+outputMsg (Left s) = s
+outputMsg (Right SetupPlateau) = "upper right coordinate not provided"
+outputMsg (Right status) = undefined

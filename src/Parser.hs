@@ -23,7 +23,7 @@ parseCoordinate x y = do
 parseUpperRight :: String -> Either String Coordinate
 parseUpperRight s = (toCoord . splitBySpace) s
   where toCoord [x, y] = parseCoordinate x y
-        toCoord xs = Left [i|#{length xs} items in '#{s}', there should be 2 items|]
+        toCoord xs = Left [i|#{length xs} items in '#{s}' in parsing the upper right coordinate, there should be 2 items|]
 
 parsePosition :: Coordinate -> String -> Either String Position
 parsePosition upperRight@(Coordinate maxX maxY) s = (toPosition . splitBySpace) s
@@ -32,7 +32,7 @@ parsePosition upperRight@(Coordinate maxX maxY) s = (toPosition . splitBySpace) 
           _ <- if withinPlateau coord upperRight then Right () else Left [i|#{presentCoord coord} not within (0, 0) to #{presentCoord upperRight}|]
           dir <- parseDirection d
           return $ Position coord dir
-        toPosition xs = Left [i|#{length xs} items in '#{s}', there should be 3 items|]
+        toPosition xs = Left [i|#{length xs} items in '#{s}' in parsing the landing position, there should be 3 items|]
 
 parseDirection :: Char -> Either String Direction
 parseDirection 'E' = Right E
