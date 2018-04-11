@@ -7,10 +7,10 @@ import Parser
 import Mover
 
 process :: [String] -> Either String ProcessStatus
-process = foldl (\acc s -> acc >>= (`processLine` s)) (Right SetupPlateau)
-  where processLine SetupPlateau =
+process = foldl (\acc s -> acc >>= (`processLine` s)) (Right Start)
+  where processLine Start =
           fmap (\upperRight -> LandNextRover upperRight [] (execCmds upperRight)) . parseUpperRight
-        processLine (LandNextRover upperRight poses land) =
-          fmap (NavigateRover upperRight poses . land) . parsePosition upperRight
-        processLine (NavigateRover upperRight poses navigate) =
-          fmap (\cmds -> LandNextRover upperRight (poses ++ [navigate cmds]) $ execCmds upperRight) . parseCommands
+        processLine (LandNextRover upperRight ps f) =
+          fmap (\p -> NavigateRover upperRight p ps f) . parsePosition upperRight
+        processLine (NavigateRover upperRight p ps f) =
+          fmap (\cmds -> LandNextRover upperRight (ps ++ [f p cmds]) $ execCmds upperRight) . parseCommands

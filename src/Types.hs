@@ -3,7 +3,7 @@ module Types
     , Direction (E, S, W, N)
     , Coordinate (Coordinate, x, y)
     , Position (Position, c, heading)
-    , ProcessStatus (SetupPlateau, LandNextRover, NavigateRover)
+    , ProcessStatus (Start, LandNextRover, NavigateRover)
     ) where
 
 data Command = L | R | M deriving (Show, Eq)
@@ -16,14 +16,15 @@ data Coordinate = Coordinate {
 
 data Position = Position { c :: Coordinate, heading :: Direction } deriving (Show, Eq)
 
-data ProcessStatus = SetupPlateau
+data ProcessStatus = Start
                    | LandNextRover {
                        upperRight :: Coordinate
                      , roverPositions :: [Position]
-                     , land :: Position -> [Command] -> Position
+                     , f :: Position -> [Command] -> Position
                     }
                    | NavigateRover {
                        upperRight :: Coordinate
+                     , landedPosition :: Position
                      , roverPositions :: [Position]
-                     , navigate :: [Command] -> Position
+                     , f :: Position -> [Command] -> Position
                     }

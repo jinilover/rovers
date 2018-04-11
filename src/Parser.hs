@@ -29,7 +29,7 @@ parsePosition :: Coordinate -> String -> Either String Position
 parsePosition upperRight@(Coordinate maxX maxY) s = (toPosition . splitBySpace) s
   where toPosition [x, y, d : ""] = do
           coord <- parseCoordinate x y
-          _ <- if withinPlateau coord upperRight then Right () else Left [i|#{presentCoord coord} not within (0, 0) to #{presentCoord upperRight}|]
+          _ <- if withinPlateau coord upperRight then Right () else Left [i|#{present coord} not within (0, 0) to #{present upperRight}|]
           dir <- parseDirection d
           return $ Position coord dir
         toPosition xs = Left [i|#{length xs} items in '#{s}' in parsing the landing position, there should be 3 items|]

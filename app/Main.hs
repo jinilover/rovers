@@ -13,5 +13,5 @@ main = do
 
 outputMsg :: Either String ProcessStatus -> String
 outputMsg (Left s) = s
-outputMsg (Right SetupPlateau) = "upper right coordinate not provided"
+outputMsg (Right Start) = "upper right coordinate not provided"
 outputMsg (Right status) = undefined
