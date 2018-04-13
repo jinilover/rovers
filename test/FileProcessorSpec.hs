@@ -27,6 +27,15 @@ processSpec =
     it "process file with all rovers navigate" $ readFile "test/resources/allRoversNavigated.txt" >>= (
         allRoversNavigatedCheck . processContent
       )
+    it "process file with last rover just landed" $ readFile "test/resources/lastRoverJustLanded.txt" >>= (
+        lastRoverJustLandedCheck . processContent
+      )
+    it "process file with only upper right" $ readFile "test/resources/onlyUpperRight.txt" >>= (
+        onlyUpperRightCheck . processContent
+      )
+    it "process empty file" $ readFile "test/resources/emptyFile.txt" >>= (
+        emptyFileCheck . processContent
+      )
       where processContent = process . lines
             invalidUpperRight (Left err) = err `shouldBe` "* can't be parsed to an integer"
             invalidUpperRight _ = assertFailure "It should encounter invalid command"
@@ -38,4 +47,12 @@ processSpec =
             outOfPlateauCheck _ = assertFailure "It should encounter out of plateau error"
             allRoversNavigatedCheck (Right (LandNextRover upperRight ps _)) =
               map present ps `shouldBe` ["(1, 3) N", "(5, 1) E", "(7, 4) E"]
-            allRoversNavigatedCheck _ = assertFailure "It should navigated 3 items"
+            allRoversNavigatedCheck _ = assertFailure "It should navigate 3 rovers"
+            lastRoverJustLandedCheck (Right (NavigateRover upperRight landedPos ps _)) =
+              map present (ps ++ [landedPos]) `shouldBe` ["(1, 3) N", "(5, 1) E", "(10, 5) W"]
+            lastRoverJustLandedCheck _ = assertFailure "It should navigate 2 rovers and landed 1 rover"
+            onlyUpperRightCheck (Right (LandNextRover upperRight [] _)) =
+              present upperRight `shouldBe` "(10, 5)"
+            onlyUpperRightCheck _ = assertFailure "It should only have upper right for the plateau"
+            emptyFileCheck (Right (Start)) = return ()
+            emptyFileCheck _ = assertFailure "It should be empty"
