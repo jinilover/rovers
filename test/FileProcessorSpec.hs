@@ -46,13 +46,13 @@ processSpec =
             outOfPlateauCheck (Left err) = err `shouldBe` "(3, 6) not within (0, 0) to (5, 5)"
             outOfPlateauCheck _ = assertFailure "It should encounter out of plateau error"
             allRoversNavigatedCheck (Right (LandNextRover upperRight ps _)) =
-              map present ps `shouldBe` ["(1, 3) N", "(5, 1) E", "(7, 4) E"]
+              map show ps `shouldBe` ["(1, 3) N", "(5, 1) E", "(7, 4) E"]
             allRoversNavigatedCheck _ = assertFailure "It should navigate 3 rovers"
             lastRoverJustLandedCheck (Right (NavigateRover upperRight landedPos ps _)) =
-              map present (ps ++ [landedPos]) `shouldBe` ["(1, 3) N", "(5, 1) E", "(10, 5) W"]
+              map show (ps ++ [landedPos]) `shouldBe` ["(1, 3) N", "(5, 1) E", "(10, 5) W"]
             lastRoverJustLandedCheck _ = assertFailure "It should navigate 2 rovers and landed 1 rover"
             onlyUpperRightCheck (Right (LandNextRover upperRight [] _)) =
-              present upperRight `shouldBe` "(10, 5)"
+              show upperRight `shouldBe` "(10, 5)"
             onlyUpperRightCheck _ = assertFailure "It should only have upper right for the plateau"
             emptyFileCheck (Right (Start)) = return ()
             emptyFileCheck _ = assertFailure "It should be empty"

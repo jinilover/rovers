@@ -12,9 +12,15 @@ data Direction = E | S | W | N deriving (Show, Eq)
 
 data Coordinate = Coordinate {
                   x :: Int
-                , y :: Int} deriving (Show, Eq)
+                , y :: Int} deriving Eq
 
-data Position = Position { c :: Coordinate, heading :: Direction } deriving (Show, Eq)
+instance Show Coordinate where
+  show (Coordinate x y) = "(" ++ show x ++ ", " ++ show y ++ ")"
+
+data Position = Position { c :: Coordinate, heading :: Direction } deriving Eq
+
+instance Show Position where
+  show (Position p heading) = show p ++ " " ++ show heading
 
 data ProcessStatus = Start
                    | LandNextRover {
